@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ExoMusicPlayer</string>
+
+    <string name="title_source">Source</string>
+    <string name="title_player">Player</string>
+    <string name="title_profile">Profile</string>
+</resources>
