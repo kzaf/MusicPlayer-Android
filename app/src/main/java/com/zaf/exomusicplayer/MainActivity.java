@@ -3,13 +3,13 @@ package com.zaf.exomusicplayer;
 import android.os.Bundle;
 import android.view.View;
 
-import com.zaf.exomusicplayer.databinding.ActivityMainBinding;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.zaf.exomusicplayer.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
