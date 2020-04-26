@@ -57,14 +57,14 @@ public class PlayerFragment extends Fragment {
     }
 
     /**
-     * Manage the click event on play button
+     * Handle play button click event
      */
     private void setupPlayPauseButtonClick() {
 
-        fragmentPlayerBinding
-                .includePlayer
-                .playButton
-                .setOnClickListener(view -> fragmentPlayerBinding.includePlayer.playButton.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp));
+        fragmentPlayerBinding.includePlayer.playButton
+                .setOnClickListener(view ->
+                        fragmentPlayerBinding.includePlayer.playButton
+                                .setImageResource(R.drawable.ic_pause_circle_outline_black_24dp));
     }
 
 }
