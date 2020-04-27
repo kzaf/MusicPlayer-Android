@@ -58,8 +58,15 @@ public class PlayerViewModel extends AndroidViewModel implements IPlayerViewMode
         }else {
             this.mIsPlay.setValue(true);
         }
-
     }
 
+    Integer updatePlayPauseResource(boolean aBoolean){
+        if (aBoolean)
+            mPlayImage.setValue(R.drawable.ic_pause_circle_outline_black_24dp);
+        else
+            mPlayImage.setValue(R.drawable.ic_play_circle_outline_black_24dp);
+
+        return mPlayImage.getValue();
+    }
 
 }

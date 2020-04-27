@@ -51,19 +51,14 @@ public class PlayerFragment extends Fragment {
                 binding.includePlayer.previousButton.setImageResource(drawablePath));
 
         viewModel.isPlay().observe(getViewLifecycleOwner(), aBoolean -> {
-            if (aBoolean)
-                binding.includePlayer.playButton.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
-            else
-                binding.includePlayer.playButton.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+                binding.includePlayer.playButton.setImageResource(viewModel.updatePlayPauseResource(aBoolean));
         });
-
     }
 
     /**
      * Handle play button click event
      */
     private void handlePlayPauseButtonClick() {
-
         binding.includePlayer.playButton.setOnClickListener(v ->
                 viewModel.togglePlayPauseButton(false));
     }
