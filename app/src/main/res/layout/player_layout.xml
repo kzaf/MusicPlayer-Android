@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="20sp">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/previous_button"
-        android:layout_width="wrap_content"
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.zaf.exomusicplayer.ui.player.PlayerViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1" />
+        android:padding="20sp">
 
-    <ImageView
-        android:id="@+id/play_button"
-        android:layout_width="wrap_content"
-        android:layout_height="60sp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:scaleType="fitCenter" />
+        <ImageView
+            android:id="@+id/previous_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
 
-    <ImageView
-        android:id="@+id/next_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1" />
-</LinearLayout>
+        <ImageView
+            android:id="@+id/play_button"
+            android:layout_width="wrap_content"
+            android:layout_height="60sp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:scaleType="fitCenter" />
+
+<!--        android:onClick="@{(view) -> viewModel.togglePlayPauseButton(true)}"-->
+
+        <ImageView
+            android:id="@+id/next_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
+    </LinearLayout>
+</layout>

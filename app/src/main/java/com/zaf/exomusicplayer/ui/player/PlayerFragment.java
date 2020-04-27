@@ -14,57 +14,58 @@ import com.zaf.exomusicplayer.databinding.FragmentPlayerBinding;
 
 public class PlayerFragment extends Fragment {
 
-    private PlayerViewModel playerViewModel;
-    private FragmentPlayerBinding fragmentPlayerBinding;
+    private PlayerViewModel viewModel;
+    private FragmentPlayerBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        fragmentPlayerBinding = FragmentPlayerBinding.inflate(inflater, container, false);
-        playerViewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
+        FragmentPlayerBinding binding = FragmentPlayerBinding.inflate(inflater, container, false);
+        this.binding = binding;
+        this.viewModel = new ViewModelProvider(this).get(PlayerViewModel.class);
 
         initializePlayerButtons();
-        setupPlayPauseButtonClick();
+        handlePlayPauseButtonClick();
 
-        return fragmentPlayerBinding.getRoot();
+        return binding.getRoot();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        fragmentPlayerBinding = null;
+        binding = null;
     }
 
     /**
      * Set the images to the player buttons
      */
     private void initializePlayerButtons(){
-        playerViewModel
-                .updatePlayImage()
-                .observe(getViewLifecycleOwner(),
-                        drawable -> fragmentPlayerBinding.includePlayer.playButton.setImageResource(drawable));
 
-        playerViewModel
-                .updateNextImage()
-                .observe(getViewLifecycleOwner(),
-                        drawable -> fragmentPlayerBinding.includePlayer.nextButton.setImageResource(drawable));
+        viewModel.updatePlayImage().observe(getViewLifecycleOwner(), drawablePath ->
+                binding.includePlayer.playButton.setImageResource(drawablePath));
 
-        playerViewModel
-                .updatePreviousImage()
-                .observe(getViewLifecycleOwner(),
-                        drawable -> fragmentPlayerBinding.includePlayer.previousButton.setImageResource(drawable));
+        viewModel.updateNextImage().observe(getViewLifecycleOwner(), drawablePath ->
+                binding.includePlayer.nextButton.setImageResource(drawablePath));
+
+        viewModel.updatePreviousImage().observe(getViewLifecycleOwner(), drawablePath ->
+                binding.includePlayer.previousButton.setImageResource(drawablePath));
+
+        viewModel.isPlay().observe(getViewLifecycleOwner(), aBoolean -> {
+            if (aBoolean)
+                binding.includePlayer.playButton.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+            else
+                binding.includePlayer.playButton.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+        });
 
     }
 
     /**
      * Handle play button click event
      */
-    private void setupPlayPauseButtonClick() {
+    private void handlePlayPauseButtonClick() {
 
-        fragmentPlayerBinding.includePlayer.playButton
-                .setOnClickListener(view ->
-                        fragmentPlayerBinding.includePlayer.playButton
-                                .setImageResource(R.drawable.ic_pause_circle_outline_black_24dp));
+        binding.includePlayer.playButton.setOnClickListener(v ->
+                viewModel.togglePlayPauseButton(false));
     }
 
 }
