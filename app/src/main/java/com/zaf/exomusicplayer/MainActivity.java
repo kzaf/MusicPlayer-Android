@@ -13,14 +13,14 @@ import com.zaf.exomusicplayer.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding activityMainBinding;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-        View view = activityMainBinding.getRoot();
+        View view = binding.getRoot();
         setContentView(view);
 
         // Passing each menu ID as a set of Ids because each
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(activityMainBinding.navView, navController);
+        NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
 }

@@ -4,41 +4,49 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.zaf.exomusicplayer.R;
 import com.zaf.exomusicplayer.databinding.FragmentSourceBinding;
+import com.zaf.exomusicplayer.databinding.SourceListItemBinding;
 
 public class SourceFragment extends Fragment {
 
-    private SourceViewModel sourceViewModel;
-    private FragmentSourceBinding fragmentSourceBinding;
+    private SourceViewModel viewModel;
+    private FragmentSourceBinding binding;
+    private SourceListItemBinding sourceListItemBinding;
+    private RecyclerView sourceListRecyclerView;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        fragmentSourceBinding = FragmentSourceBinding.inflate(inflater, container, false);
-        View root = fragmentSourceBinding.getRoot();
+        binding = FragmentSourceBinding.inflate(inflater, container, false);
+        sourceListItemBinding = SourceListItemBinding.inflate(inflater, container, false);
+        viewModel = new ViewModelProvider(this).get(SourceViewModel.class);
 
-        sourceViewModel = ViewModelProviders.of(this).get(SourceViewModel.class);
-        sourceViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                fragmentSourceBinding.textSource.setText(s);
-            }
+        viewModel.generateRecyclerViewList(getActivity(), binding.sourceRecyclerView, sourceListItemBinding);
+
+        initializeView();
+
+        return binding.getRoot();
+    }
+
+    private void initializeView() {
+
+        viewModel.getText().observe(getViewLifecycleOwner(), s ->
+                binding.textSource.setText(s));
+
+        viewModel.getRecyclerView().observe(getViewLifecycleOwner(), recyclerView -> {
+            sourceListRecyclerView = recyclerView;
         });
-        return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        fragmentSourceBinding = null;
+        binding = null;
     }
 }
