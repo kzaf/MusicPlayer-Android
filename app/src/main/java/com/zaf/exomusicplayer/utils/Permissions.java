@@ -38,7 +38,12 @@ public class Permissions {
 
     public void requestPermissionForReadExternalStorage() throws Exception {
         try {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_STORAGE_PERMISSION_REQUEST_CODE);
+
+            ActivityCompat.requestPermissions(
+                    (Activity) context,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    READ_STORAGE_PERMISSION_REQUEST_CODE);
+
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

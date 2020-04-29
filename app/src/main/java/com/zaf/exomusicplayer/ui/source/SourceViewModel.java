@@ -15,16 +15,14 @@ import com.zaf.exomusicplayer.model.SourceListItem;
 import java.io.File;
 import java.util.ArrayList;
 
-public class SourceViewModel extends ViewModel implements SourceListAdapter.SourceListAdapterListItemClickListener {
+public class SourceViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
     private MutableLiveData<RecyclerView> mRecyclerView;
-    private ArrayList<SourceListItem> directories;
 
     public SourceViewModel() {
         mText = new MutableLiveData<>();
         mRecyclerView = new MutableLiveData<>();
-        directories = new ArrayList<>();
 
         mText.setValue("This is source fragment");
     }
@@ -37,20 +35,11 @@ public class SourceViewModel extends ViewModel implements SourceListAdapter.Sour
         return mRecyclerView;
     }
 
-    public void generateRecyclerViewList(Context context, RecyclerView recyclerView){
 
-        if (!getDirectory(Environment.getRootDirectory().toString()))
-            return;
+    public ArrayList<SourceListItem> getDirectory(String pathname) {
 
-        SourceListAdapter adapter = new SourceListAdapter(this, directories);
+        ArrayList<SourceListItem> directories = new ArrayList<>();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
-    }
-
-    private boolean getDirectory(String pathname) {
         SourceListItem sourceListItem;
         File file = new File(pathname);
         File[] root = file.listFiles();
@@ -65,13 +54,8 @@ public class SourceViewModel extends ViewModel implements SourceListAdapter.Sour
                 directories.add(sourceListItem);
             }
         }else {
-            return false;
+            return null;
         }
-        return true;
-    }
-
-    @Override
-    public void onListItemClick(int item) {
-        getDirectory(directories.get(item).getName());
+        return directories;
     }
 }
