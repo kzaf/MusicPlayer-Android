@@ -22,20 +22,20 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
     private ArrayList<SourceListItem> sourceItemList;
 
     public SourceListAdapter(SourceListAdapterListItemClickListener mOnClickListener,
-                             ArrayList<SourceListItem> sourceItemList,
-                             SourceListItemBinding sourceListItemBinding) {
+                             ArrayList<SourceListItem> sourceItemList) {
 
         this.mOnClickListener = mOnClickListener;
         this.sourceItemList = sourceItemList;
-        this.sourceListItemBinding = sourceListItemBinding;
     }
 
     @NonNull
     @Override
     public SourceListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.source_list_item, viewGroup, false);
 
-        return new SourceListViewHolder(view);
+        LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
+        sourceListItemBinding = SourceListItemBinding.inflate(layoutInflater, viewGroup, false);
+
+        return new SourceListViewHolder(sourceListItemBinding.getRoot(), sourceListItemBinding);
     }
 
     @Override
@@ -58,11 +58,13 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
 
         ImageView itemImage;
         TextView itemDescription;
+        SourceListItemBinding binding;
 
-        private SourceListViewHolder(View itemView) {
+        private SourceListViewHolder(View itemView, SourceListItemBinding binding) {
             super(itemView);
+            this.binding = binding;
 
-            itemImage = sourceListItemBinding.sourceItemIcon;
+            itemImage =  sourceListItemBinding.sourceItemIcon;
             itemDescription = sourceListItemBinding.sourceItemText;
 
             itemView.setOnClickListener(this);

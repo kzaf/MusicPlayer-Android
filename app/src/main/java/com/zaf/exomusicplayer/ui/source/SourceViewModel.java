@@ -45,7 +45,7 @@ public class SourceViewModel extends ViewModel implements SourceListAdapter.Sour
         return mRecyclerView;
     }
 
-    public void generateRecyclerViewList(Context context, RecyclerView recyclerView, SourceListItemBinding sourceListItemBinding){
+    public void generateRecyclerViewList(Context context, RecyclerView recyclerView){
 
         checkStoragePermission(context);
 
@@ -54,7 +54,7 @@ public class SourceViewModel extends ViewModel implements SourceListAdapter.Sour
         if (!getRootDirectory(directories))
             return;
 
-        SourceListAdapter adapter = new SourceListAdapter(this, directories, sourceListItemBinding);
+        SourceListAdapter adapter = new SourceListAdapter(this, directories);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(adapter);

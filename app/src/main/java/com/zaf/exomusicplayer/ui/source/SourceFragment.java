@@ -18,16 +18,14 @@ public class SourceFragment extends Fragment {
 
     private SourceViewModel viewModel;
     private FragmentSourceBinding binding;
-    private SourceListItemBinding sourceListItemBinding;
     private RecyclerView sourceListRecyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentSourceBinding.inflate(inflater, container, false);
-        sourceListItemBinding = SourceListItemBinding.inflate(inflater, container, false);
         viewModel = new ViewModelProvider(this).get(SourceViewModel.class);
 
-        viewModel.generateRecyclerViewList(getActivity(), binding.sourceRecyclerView, sourceListItemBinding);
+        viewModel.generateRecyclerViewList(getActivity(), binding.sourceRecyclerView);
 
         initializeView();
 
