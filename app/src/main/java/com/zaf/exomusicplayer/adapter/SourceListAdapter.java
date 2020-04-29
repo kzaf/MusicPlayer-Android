@@ -41,6 +41,7 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
     @Override
     public void onBindViewHolder(@NonNull SourceListViewHolder sourceListViewHolder, int position) {
         sourceListViewHolder.itemDescription.setText(sourceItemList.get(position).getName());
+        sourceListViewHolder.itemImage.setImageResource(sourceItemList.get(position).getIcon());
     }
 
     @Override

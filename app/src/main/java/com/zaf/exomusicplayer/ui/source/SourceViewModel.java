@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.zaf.exomusicplayer.R;
 import com.zaf.exomusicplayer.adapter.SourceListAdapter;
 import com.zaf.exomusicplayer.databinding.SourceListItemBinding;
 import com.zaf.exomusicplayer.model.SourceListItem;
@@ -69,9 +70,9 @@ public class SourceViewModel extends ViewModel implements SourceListAdapter.Sour
         if (root != null) {
             for (File inFile : root) {
                 if (inFile.isDirectory()) {
-                    sourceListItem = new SourceListItem(null, inFile.getName());
+                    sourceListItem = new SourceListItem(R.drawable.ic_source_black_24dp, inFile.getName());
                 }else {
-                    sourceListItem = new SourceListItem(null, inFile.getName());
+                    sourceListItem = new SourceListItem(R.drawable.ic_insert_drive_file_black_24dp, inFile.getName());
                 }
                 directories.add(sourceListItem);
             }

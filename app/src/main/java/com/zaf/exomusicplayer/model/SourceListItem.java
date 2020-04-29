@@ -2,19 +2,19 @@ package com.zaf.exomusicplayer.model;
 
 public class SourceListItem {
 
-    private String icon;
+    private int icon;
     private String name;
 
-    public SourceListItem(String icon, String name) {
+    public SourceListItem(int icon, String name) {
         this.icon = icon;
         this.name = name;
     }
 
-    public String getIcon() {
+    public int getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon) {
+    public void setIcon(int icon) {
         this.icon = icon;
     }
 
