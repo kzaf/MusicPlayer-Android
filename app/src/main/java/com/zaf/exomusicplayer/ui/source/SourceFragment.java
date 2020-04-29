@@ -26,6 +26,7 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
     private FragmentSourceBinding binding;
     private RecyclerView sourceListRecyclerView;
     private ArrayList<SourceListItem> directories;
+    private String rootDirPath;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
         Permissions permissions = new Permissions(getActivity());
         permissions.checkStoragePermission();
 
+        rootDirPath = Environment.getRootDirectory().toString();
         directories = new ArrayList<>();
 
     }
@@ -45,7 +47,7 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
         initializeView();
 
-        generateRecyclerViewList(Environment.getRootDirectory().toString());
+        generateRecyclerViewList(rootDirPath);
 
         return binding.getRoot();
     }
@@ -68,7 +70,7 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
     @Override
     public void onListItemClick(int item) {
-        generateRecyclerViewList(directories.get(item).getName());
+        generateRecyclerViewList(rootDirPath + "/" + directories.get(item).getName());
     }
 
     private void generateRecyclerViewList(String pathname){
