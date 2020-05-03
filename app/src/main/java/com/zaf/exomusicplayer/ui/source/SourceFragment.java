@@ -35,11 +35,9 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
         Permissions permissions = new Permissions(getActivity());
         permissions.checkStoragePermission();
 
-        rootDirPath = Environment.getRootDirectory().toString();
-        directories = new ArrayList<>();
-
     }
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         binding = FragmentSourceBinding.inflate(inflater, container, false);
@@ -47,19 +45,11 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
         initializeView();
 
+        rootDirPath = Environment.getRootDirectory().toString();
+
         generateRecyclerViewList(rootDirPath);
 
         return binding.getRoot();
-    }
-
-    private void initializeView() {
-
-        viewModel.getText().observe(getViewLifecycleOwner(), s ->
-                binding.textSource.setText(s));
-
-        viewModel.getRecyclerView().observe(getViewLifecycleOwner(), recyclerView -> {
-            sourceListRecyclerView = recyclerView;
-        });
     }
 
     @Override
@@ -73,7 +63,20 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
         generateRecyclerViewList(rootDirPath + "/" + directories.get(item).getName());
     }
 
+    private void initializeView() {
+
+        viewModel.getText().observe(getViewLifecycleOwner(), s ->
+                binding.textSource.setText(s));
+
+        viewModel.getRecyclerView().observe(getViewLifecycleOwner(), recyclerView -> {
+            sourceListRecyclerView = recyclerView;
+        });
+    }
+
     private void generateRecyclerViewList(String pathname){
+
+        directories = new ArrayList<>();
+        rootDirPath = pathname;
 
         if (viewModel.getDirectory(pathname) == null)
             return;
