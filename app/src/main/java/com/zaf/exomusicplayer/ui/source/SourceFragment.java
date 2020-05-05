@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.zaf.exomusicplayer.adapter.SourceListAdapter;
 import com.zaf.exomusicplayer.databinding.FragmentSourceBinding;
@@ -24,9 +23,8 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
     private SourceViewModel viewModel;
     private FragmentSourceBinding binding;
-    private RecyclerView sourceListRecyclerView;
-    private ArrayList<SourceListItem> directories;
-    private String rootDirPath;
+    private SourceListAdapter sourceListAdapter;
+    private String sourceCurrentPath;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +32,6 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
         Permissions permissions = new Permissions(getActivity());
         permissions.checkStoragePermission();
-
     }
 
     @Override
@@ -45,11 +42,21 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
         initializeView();
 
-        rootDirPath = Environment.getRootDirectory().toString();
-
-        generateRecyclerViewList(rootDirPath);
+        sourceCurrentPath = Environment.getRootDirectory().toString();
 
         return binding.getRoot();
+    }
+
+    private void initializeView() {
+
+        viewModel.getText().observe(getViewLifecycleOwner(), s ->
+                binding.textSource.setText(s));
+
+        viewModel.getDirectories().observe(getViewLifecycleOwner(), sourceListItems -> {
+            sourceListAdapter = new SourceListAdapter(this, sourceListItems);
+            binding.sourceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            binding.sourceRecyclerView.setAdapter(sourceListAdapter);
+        });
     }
 
     @Override
@@ -60,34 +67,9 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
     @Override
     public void onListItemClick(int item) {
-        generateRecyclerViewList(rootDirPath + "/" + directories.get(item).getName());
-    }
+        String rootDirPath = sourceCurrentPath + "/" + viewModel.getDirectories().getValue().get(item).getName();
+        viewModel.getDirectories().setValue(viewModel.getDirectory(rootDirPath));
+        sourceCurrentPath = sourceCurrentPath + rootDirPath;
 
-    private void initializeView() {
-
-        viewModel.getText().observe(getViewLifecycleOwner(), s ->
-                binding.textSource.setText(s));
-
-        viewModel.getRecyclerView().observe(getViewLifecycleOwner(), recyclerView -> {
-            sourceListRecyclerView = recyclerView;
-        });
-    }
-
-    private void generateRecyclerViewList(String pathname){
-
-        directories = new ArrayList<>();
-        rootDirPath = pathname;
-
-        if (viewModel.getDirectory(pathname) == null)
-            return;
-
-        directories = viewModel.getDirectory(pathname);
-
-        SourceListAdapter adapter = new SourceListAdapter(this, directories);
-
-        binding.sourceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.sourceRecyclerView.setAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
     }
 }

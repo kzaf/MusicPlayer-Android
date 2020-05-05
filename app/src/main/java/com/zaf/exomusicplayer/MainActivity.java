@@ -14,6 +14,7 @@ import com.zaf.exomusicplayer.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private int navViewMeasuredHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        binding.navView.post(() -> navViewMeasuredHeight = binding.navView.getMeasuredHeight());
     }
 
+    public float getNavViewMeasuredHeight(){
+        return navViewMeasuredHeight;
+    }
 }
