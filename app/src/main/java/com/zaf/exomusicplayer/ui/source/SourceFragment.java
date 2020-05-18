@@ -14,10 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.zaf.exomusicplayer.adapter.SourceListAdapter;
 import com.zaf.exomusicplayer.databinding.FragmentSourceBinding;
-import com.zaf.exomusicplayer.model.SourceListItem;
 import com.zaf.exomusicplayer.utils.Permissions;
-
-import java.util.ArrayList;
 
 public class SourceFragment extends Fragment implements SourceListAdapter.SourceListAdapterListItemClickListener {
 
