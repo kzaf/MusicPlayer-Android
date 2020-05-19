@@ -64,9 +64,9 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
     @Override
     public void onListItemClick(int item) {
-        String rootDirPath = sourceCurrentPath + "/" + viewModel.getDirectories().getValue().get(item).getName();
-        viewModel.getDirectories().setValue(viewModel.getDirectory(rootDirPath));
-        sourceCurrentPath = sourceCurrentPath + rootDirPath;
+//        String rootDirPath = sourceCurrentPath + "/" + viewModel.getDirectories().getValue().get(item).getName();
+//        viewModel.getDirectories().setValue(viewModel.getDirectory(rootDirPath));
+//        sourceCurrentPath = sourceCurrentPath + rootDirPath;
 
     }
 }

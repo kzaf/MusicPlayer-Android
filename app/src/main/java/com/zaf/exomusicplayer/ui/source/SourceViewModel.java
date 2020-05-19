@@ -19,7 +19,6 @@ public class SourceViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> mText;
     private MutableLiveData<ArrayList<SourceListItem>> directoriesLiveData;
-//    private ArrayList<SourceListItem> directoriesList;
 
     public SourceViewModel(Application application) {
         super(application);
@@ -28,8 +27,6 @@ public class SourceViewModel extends AndroidViewModel {
 
         mText.setValue(" <- Back");
 
-//        directoriesList = new ArrayList<>();
-//        directoriesList = getDirectory(Environment.getRootDirectory().toString());
         directoriesLiveData.setValue(getAllMusic());
     }
 
@@ -41,28 +38,28 @@ public class SourceViewModel extends AndroidViewModel {
         return directoriesLiveData;
     }
 
-    public ArrayList<SourceListItem> getDirectory(String pathname) {
-
-        ArrayList<SourceListItem> directories = new ArrayList<>();
-
-        SourceListItem sourceListItem;
-        File file = new File(pathname);
-        File[] root = file.listFiles();
-
-        if (root != null) {
-            for (File inFile : root) {
-                if (inFile.isDirectory()) {
-                    sourceListItem = new SourceListItem(R.drawable.ic_source_black_24dp, inFile.getName());
-                }else {
-                    sourceListItem = new SourceListItem(R.drawable.ic_insert_drive_file_black_24dp, inFile.getName());
-                }
-                directories.add(sourceListItem);
-            }
-        }else {
-            return null;
-        }
-        return directories;
-    }
+//    public ArrayList<SourceListItem> getDirectory(String pathname) {
+//
+//        ArrayList<SourceListItem> directories = new ArrayList<>();
+//
+//        SourceListItem sourceListItem;
+//        File file = new File(pathname);
+//        File[] root = file.listFiles();
+//
+//        if (root != null) {
+//            for (File inFile : root) {
+//                if (inFile.isDirectory()) {
+//                    sourceListItem = new SourceListItem(R.drawable.ic_source_black_24dp, inFile.getName());
+//                } else {
+//                    sourceListItem = new SourceListItem(R.drawable.ic_insert_drive_file_black_24dp, inFile.getName());
+//                }
+//                directories.add(sourceListItem);
+//            }
+//        } else {
+//            return null;
+//        }
+//        return directories;
+//    }
 
     private ArrayList<SourceListItem> getAllMusic(){
 
@@ -71,15 +68,39 @@ public class SourceViewModel extends AndroidViewModel {
         ContentResolver contentResolver = getApplication().getContentResolver();
 
         Uri uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String[] columns = {MediaStore.Audio.Media.DISPLAY_NAME};
+        String[] columns = {
+                MediaStore.Audio.Media._ID,
+                MediaStore.Audio.Media.ARTIST,
+                MediaStore.Audio.Media.TITLE,
+                MediaStore.Audio.Media.DATA,
+                MediaStore.Audio.Media.DISPLAY_NAME,
+                MediaStore.Audio.Media.DURATION,
+                MediaStore.Audio.Media.YEAR
+        };
+        String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
-        Cursor cursor = contentResolver.query(uri, columns, null, null, null);
+        Cursor cursor = contentResolver.query(uri, columns, selection, null, null);
 
         if(cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
             do{
-                String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
-                artst.add(new SourceListItem(R.drawable.ic_insert_drive_file_black_24dp, artist));
+
+                try {
+
+                    int songId = Integer.parseInt(cursor.getString(0));
+                    String songArtist = cursor.getString(1);
+                    String songTitle = cursor.getString(2);
+                    String songData = cursor.getString(3);
+                    String songDisplayName = cursor.getString(4);
+                    int songDuration = Integer.parseInt(cursor.getString(5));
+                    String songYear = cursor.getString(6);
+
+                    artst.add(new SourceListItem(songId, R.drawable.ic_insert_drive_file_black_24dp, songTitle, songArtist, songYear, songDuration));
+
+                }catch (Exception e){
+                    String a = e.getMessage();
+                }
+
             }while(cursor.moveToNext());
         }
         cursor.close();
