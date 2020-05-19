@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.zaf.exomusicplayer.R;
 import com.zaf.exomusicplayer.databinding.SourceListItemBinding;
 import com.zaf.exomusicplayer.model.SourceListItem;
 
@@ -40,8 +39,14 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
 
     @Override
     public void onBindViewHolder(@NonNull SourceListViewHolder sourceListViewHolder, int position) {
-        sourceListViewHolder.itemDescription.setText(sourceItemList.get(position).getName());
-        sourceListViewHolder.itemImage.setImageResource(sourceItemList.get(position).getIcon());
+
+        String songTitle = sourceItemList.get(position).getName();
+        String songArtist = sourceItemList.get(position).getArtist();
+        String songDisplayName = songTitle + " - " + songArtist;
+
+        sourceListViewHolder.songImage.setImageResource(sourceItemList.get(position).getIcon());
+        sourceListViewHolder.songTitle.setText(songDisplayName);
+        sourceListViewHolder.songYear.setText(sourceItemList.get(position).getYear());
     }
 
     @Override
@@ -56,16 +61,19 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
 
     public class SourceListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        ImageView itemImage;
-        TextView itemDescription;
         SourceListItemBinding binding;
+
+        ImageView songImage;
+        TextView songTitle;
+        TextView songYear;
 
         private SourceListViewHolder(View itemView, SourceListItemBinding binding) {
             super(itemView);
             this.binding = binding;
 
-            itemImage =  sourceListItemBinding.sourceItemIcon;
-            itemDescription = sourceListItemBinding.sourceItemText;
+            songImage =  sourceListItemBinding.sourceItemIcon;
+            songTitle = sourceListItemBinding.sourceItemText;
+            songYear = sourceListItemBinding.sourceItemYear;
 
             itemView.setOnClickListener(this);
         }

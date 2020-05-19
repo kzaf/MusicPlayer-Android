@@ -75,7 +75,8 @@ public class SourceViewModel extends AndroidViewModel {
                 MediaStore.Audio.Media.DATA,
                 MediaStore.Audio.Media.DISPLAY_NAME,
                 MediaStore.Audio.Media.DURATION,
-                MediaStore.Audio.Media.YEAR
+                MediaStore.Audio.Media.YEAR,
+                MediaStore.Audio.Media.ALBUM
         };
         String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
@@ -94,8 +95,15 @@ public class SourceViewModel extends AndroidViewModel {
                     String songDisplayName = cursor.getString(4);
                     int songDuration = Integer.parseInt(cursor.getString(5));
                     String songYear = cursor.getString(6);
+                    String songAlbum = cursor.getString(7);
 
-                    artst.add(new SourceListItem(songId, R.drawable.ic_insert_drive_file_black_24dp, songTitle, songArtist, songYear, songDuration));
+                    artst.add(new SourceListItem(songId,
+                            R.drawable.ic_player_black_24dp,
+                            songTitle,
+                            songArtist,
+                            songYear,
+                            songDuration,
+                            songAlbum));
 
                 }catch (Exception e){
                     String a = e.getMessage();

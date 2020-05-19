@@ -6,14 +6,16 @@ public class SourceListItem {
     private String name;
     private String artist;
     private String year;
+    private String album;
 
-    public SourceListItem(int id, int icon, String name, String artist, String year, int duration) {
+    public SourceListItem(int id, int icon, String name, String artist, String year, int duration, String album) {
         this.id = id;
         this.icon = icon;
         this.name = name;
         this.artist = artist;
         this.year = year;
         this.duration = duration;
+        this.album = album;
     }
 
     public int getIcon() {
@@ -62,5 +64,13 @@ public class SourceListItem {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
     }
 }
