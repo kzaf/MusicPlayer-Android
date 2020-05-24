@@ -3,9 +3,7 @@ package com.zaf.exomusicplayer.ui.source;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 
 public class SourceViewModel extends AndroidViewModel {
 
-    private static final String TAG = SourceViewModel.class.getName();
     private MutableLiveData<ArrayList<SourceListItem>> directoriesLiveData;
 
     public SourceViewModel(Application application) {
@@ -76,7 +73,7 @@ public class SourceViewModel extends AndroidViewModel {
                             songData));
 
                 }catch (Exception e){
-                    Log.e(TAG, "getAllMusic: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }while(cursor.moveToNext());
         }

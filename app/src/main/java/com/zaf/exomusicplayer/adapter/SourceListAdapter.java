@@ -55,10 +55,6 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
         return sourceItemList.size();
     }
 
-    public interface SourceListAdapterListItemClickListener {
-        void onListItemClick(String path);
-    }
-
     public class SourceListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         SourceListItemBinding binding;
@@ -81,8 +77,11 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            String path = sourceItemList.get(adapterPosition).getPath();
-            mOnClickListener.onListItemClick(path);
+            mOnClickListener.onListItemClick(sourceItemList.get(adapterPosition));
         }
+    }
+
+    public interface SourceListAdapterListItemClickListener {
+        void onListItemClick(SourceListItem path);
     }
 }

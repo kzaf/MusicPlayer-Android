@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.zaf.exomusicplayer.adapter.SourceListAdapter;
 import com.zaf.exomusicplayer.databinding.FragmentSourceBinding;
+import com.zaf.exomusicplayer.model.SourceListItem;
 import com.zaf.exomusicplayer.utils.Permissions;
 
 import java.io.IOException;
@@ -59,11 +60,11 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
     }
 
     @Override
-    public void onListItemClick(String path) {
+    public void onListItemClick(SourceListItem selectedSong) {
 
         MediaPlayer mp = new MediaPlayer();
         try {
-            mp.setDataSource(path);
+            mp.setDataSource(selectedSong.getPath());
             mp.prepare();
             mp.start();
         } catch (IOException e) {
