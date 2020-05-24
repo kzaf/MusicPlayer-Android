@@ -17,21 +17,13 @@ import java.util.ArrayList;
 
 public class SourceViewModel extends AndroidViewModel {
 
-    private MutableLiveData<String> mText;
     private MutableLiveData<ArrayList<SourceListItem>> directoriesLiveData;
 
     public SourceViewModel(Application application) {
         super(application);
-        mText = new MutableLiveData<>();
         directoriesLiveData = new MutableLiveData<>();
 
-        mText.setValue(" <- Back");
-
         directoriesLiveData.setValue(getAllMusic());
-    }
-
-    public MutableLiveData<String> getText() {
-        return mText;
     }
 
     public MutableLiveData<ArrayList<SourceListItem>> getDirectories() {

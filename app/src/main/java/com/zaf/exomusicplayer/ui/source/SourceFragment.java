@@ -1,7 +1,6 @@
 package com.zaf.exomusicplayer.ui.source;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
     private SourceViewModel viewModel;
     private FragmentSourceBinding binding;
     private SourceListAdapter sourceListAdapter;
-    private String sourceCurrentPath;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,15 +37,10 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
 
         initializeView();
 
-        sourceCurrentPath = Environment.getRootDirectory().toString();
-
         return binding.getRoot();
     }
 
     private void initializeView() {
-
-        viewModel.getText().observe(getViewLifecycleOwner(), s ->
-                binding.textSource.setText(s));
 
         viewModel.getDirectories().observe(getViewLifecycleOwner(), sourceListItems -> {
             sourceListAdapter = new SourceListAdapter(this, sourceListItems);
