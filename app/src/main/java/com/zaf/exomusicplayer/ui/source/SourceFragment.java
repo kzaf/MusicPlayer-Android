@@ -1,5 +1,6 @@
 package com.zaf.exomusicplayer.ui.source;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.zaf.exomusicplayer.adapter.SourceListAdapter;
 import com.zaf.exomusicplayer.databinding.FragmentSourceBinding;
 import com.zaf.exomusicplayer.utils.Permissions;
+
+import java.io.IOException;
 
 public class SourceFragment extends Fragment implements SourceListAdapter.SourceListAdapterListItemClickListener {
 
@@ -56,10 +59,16 @@ public class SourceFragment extends Fragment implements SourceListAdapter.Source
     }
 
     @Override
-    public void onListItemClick(int item) {
-//        String rootDirPath = sourceCurrentPath + "/" + viewModel.getDirectories().getValue().get(item).getName();
-//        viewModel.getDirectories().setValue(viewModel.getDirectory(rootDirPath));
-//        sourceCurrentPath = sourceCurrentPath + rootDirPath;
+    public void onListItemClick(String path) {
+
+        MediaPlayer mp = new MediaPlayer();
+        try {
+            mp.setDataSource(path);
+            mp.prepare();
+            mp.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

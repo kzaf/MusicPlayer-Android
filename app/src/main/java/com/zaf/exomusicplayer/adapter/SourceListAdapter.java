@@ -56,7 +56,7 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
     }
 
     public interface SourceListAdapterListItemClickListener {
-        void onListItemClick(int item);
+        void onListItemClick(String path);
     }
 
     public class SourceListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -81,7 +81,8 @@ public class SourceListAdapter extends RecyclerView.Adapter<SourceListAdapter.So
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            mOnClickListener.onListItemClick(adapterPosition);
+            String path = sourceItemList.get(adapterPosition).getPath();
+            mOnClickListener.onListItemClick(path);
         }
     }
 }

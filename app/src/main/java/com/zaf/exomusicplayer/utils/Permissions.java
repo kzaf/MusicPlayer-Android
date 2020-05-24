@@ -11,6 +11,10 @@ import androidx.core.app.ActivityCompat;
 public class Permissions {
 
     public static int READ_STORAGE_PERMISSION_REQUEST_CODE = 300;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     private Context context;
 
@@ -41,7 +45,7 @@ public class Permissions {
 
             ActivityCompat.requestPermissions(
                     (Activity) context,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    PERMISSIONS_STORAGE,
                     READ_STORAGE_PERMISSION_REQUEST_CODE);
 
         } catch (Exception e) {

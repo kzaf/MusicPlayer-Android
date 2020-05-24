@@ -7,8 +7,10 @@ public class SourceListItem {
     private String artist;
     private String year;
     private String album;
+    private String path;
 
-    public SourceListItem(int id, int icon, String name, String artist, String year, int duration, String album) {
+    public SourceListItem(int id, int icon, String name, String artist, String year, int duration,
+                          String album, String songData) {
         this.id = id;
         this.icon = icon;
         this.name = name;
@@ -16,6 +18,7 @@ public class SourceListItem {
         this.year = year;
         this.duration = duration;
         this.album = album;
+        this.path = songData;
     }
 
     public int getIcon() {
@@ -72,5 +75,13 @@ public class SourceListItem {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }
